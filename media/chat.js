@@ -2532,12 +2532,29 @@
               lc.textContent = '_';
               tab.currentAgentBlock.appendChild(lc);
             } else {
-              // Incremental plain-text render during streaming (no markdown).
-              // Only update textContent — avoids expensive renderMarkdown per frame.
-              // Full markdown render happens in finalizeAgentBlock.
-              if (tab._streamingSpan) {
-                tab._streamingSpan.textContent = tab.currentAgentText;
-              }
+              // Incremental MARKDOWN render during streaming so the
+              // message prettifies AS tokens arrive rather than
+              // showing raw `**foo**` / `# bar` / ``` fences until
+              // the turn ends. The outer requestAnimationFrame above
+              // already coalesces bursts of deltas into one render
+              // per frame (~60 Hz max), and renderMarkdown is a
+              // pure-regex pass with no DOM diffing, so cost stays
+              // bounded even on long messages. Partial markdown
+              // (an unclosed fence, an unclosed **bold**) naturally
+              // falls through as literal text until its closing
+              // token arrives — that's the intended "chunk by
+              // chunk" prettification effect.
+              var liveHtml = renderMarkdown(stripEmojis(tab.currentAgentText));
+              tab.currentAgentBlock.innerHTML = liveHtml;
+              var lc2 = document.createElement('span');
+              lc2.className = 'blinking-cursor';
+              lc2.textContent = '_';
+              tab.currentAgentBlock.appendChild(lc2);
+              // The original <span class="streaming-text"> element
+              // created by startAgentBlock has now been replaced;
+              // drop the stale reference so any later code path
+              // can't write to a detached node.
+              tab._streamingSpan = null;
             }
             tab.scrollToBottom();
           });
