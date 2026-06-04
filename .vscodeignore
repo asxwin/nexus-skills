@@ -1,0 +1,43 @@
+# ─── What NOT to pack into the .vsix ──────────────────────────────────────
+# The extension imports ONLY Node built-ins + the vscode API (no third-party
+# runtime deps), so the entire node_modules tree is dev/packaging tooling and
+# must never ship. Everything below is excluded from `vsce package`.
+
+# Dependency tree — 17+ MB of dev/transitive tooling (vsce, typescript, etc.)
+node_modules/**
+
+# TypeScript sources & build config — only the compiled out/*.js needs to ship
+src/**
+**/*.ts
+!out/**/*.d.ts
+tsconfig.json
+.eslintrc*
+.editorconfig
+
+# Source maps — not needed at runtime, ~half of out/
+**/*.map
+
+# Compiled test files — they compile into out/ for local `node --test` runs
+# but must never ship in the packaged extension.
+out/**/*.test.js
+out/**/*.test.d.ts
+
+# Previously-built packages / nested vsix artifacts
+**/*.vsix
+out/*.vsix
+
+# Local codebase index — generated per-workspace, must never ship in the .vsix
+.nexus/**
+
+# Editor / VCS / CI noise
+.vscode/**
+.vscode-test/**
+.github/**
+.git/**
+.gitignore
+.gitattributes
+
+# Misc dev files
+**/*.log
+**/.DS_Store
+**/tsconfig.tsbuildinfo

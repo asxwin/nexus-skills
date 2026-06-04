@@ -1,0 +1,33 @@
+
+# Build output
+out/
+
+# Dependencies
+node_modules/
+
+# Packaged extensions
+*.vsix
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# Temp files
+*.tmp
+*.swp
+*~
+
+# Logs
+*.log
+
+# Stray local notes (not part of the project)
+flat-vs-round-earth-essay.md
+
+# NEXUS local codebase index
+.nexus/

@@ -1,0 +1,210 @@
+{
+  "name": "nexus-skills",
+  "displayName": "NEXUS",
+  "description": "NEXUS AI coding agent — chat, skills, file access, command execution",
+  "version": "0.5.0",
+  "publisher": "nexus",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asxwin/nexus-skills"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "nexus-skills",
+          "title": "NEXUS",
+          "icon": "media/skills-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "nexus-skills": [
+        {
+          "type": "webview",
+          "id": "nexusChatView",
+          "name": "Agent Chat",
+          "icon": "media/skills-icon.svg",
+          "webviewOptions": {
+            "retainContextWhenHidden": true
+          }
+        },
+        {
+          "type": "webview",
+          "id": "nexusDiscussView",
+          "name": "Discuss",
+          "icon": "media/skills-icon.svg",
+          "webviewOptions": {
+            "retainContextWhenHidden": true
+          }
+        },
+        {
+          "id": "qgenieSkillsTree",
+          "name": "Skills",
+          "icon": "media/skills-icon.svg"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "qgenieSkills.refresh",
+        "title": "Refresh Skills",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "qgenieSkills.createSkill",
+        "title": "New Skill",
+        "icon": "$(add)"
+      },
+      {
+        "command": "qgenieSkills.openSkill",
+        "title": "Open Skill",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "qgenieSkills.useSkill",
+        "title": "Use Skill in NEXUS",
+        "icon": "$(play)"
+      },
+      {
+        "command": "qgenieSkills.customizeSkill",
+        "title": "Customize Skill",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "qgenieSkills.deleteSkill",
+        "title": "Delete Skill",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "qgenieSkills.showPanel",
+        "title": "NEXUS: Open Skills Manager"
+      },
+      {
+        "command": "qgenieSkills.openChat",
+        "title": "NEXUS: Open Agent Chat",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "qgenieSkills.chatWithSkill",
+        "title": "Chat with Skill",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "qgenieSkills.updateApiKey",
+        "title": "NEXUS: Update API Key",
+        "icon": "$(key)"
+      },
+      {
+        "command": "qgenieSkills.openInsights",
+        "title": "NEXUS: Insights",
+        "icon": "$(graph)"
+      },
+      {
+        "command": "qgenieSkills.indexCodebase",
+        "title": "NEXUS: Index Codebase",
+        "icon": "$(database)"
+      },
+      {
+        "command": "qgenieSkills.reindexCodebase",
+        "title": "NEXUS: Re-index Codebase",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "qgenieSkills.clearCodebaseIndex",
+        "title": "NEXUS: Clear Codebase Index",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "qgenieSkills.searchCodebase",
+        "title": "NEXUS: Search Codebase (local index)",
+        "icon": "$(search)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "qgenieSkills.refresh",
+          "when": "view == qgenieSkillsTree",
+          "group": "navigation"
+        },
+        {
+          "command": "qgenieSkills.createSkill",
+          "when": "view == qgenieSkillsTree",
+          "group": "navigation"
+        },
+        {
+          "command": "qgenieSkills.openInsights",
+          "when": "view == qgenieSkillsTree",
+          "group": "navigation"
+        },
+        {
+          "command": "qgenieSkills.updateApiKey",
+          "when": "view == qgenieSkillsTree || view == nexusChatView",
+          "group": "navigation"
+        },
+        {
+          "command": "qgenieSkills.openInsights",
+          "when": "view == nexusChatView",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "qgenieSkills.useSkill",
+          "when": "view == qgenieSkillsTree && viewItem == skill",
+          "group": "inline"
+        },
+        {
+          "command": "qgenieSkills.openSkill",
+          "when": "view == qgenieSkillsTree && viewItem == skill",
+          "group": "inline"
+        },
+        {
+          "command": "qgenieSkills.chatWithSkill",
+          "when": "view == qgenieSkillsTree && viewItem == skill",
+          "group": "inline"
+        },
+        {
+          "command": "qgenieSkills.customizeSkill",
+          "when": "view == qgenieSkillsTree && viewItem == skill"
+        },
+        {
+          "command": "qgenieSkills.deleteSkill",
+          "when": "view == qgenieSkillsTree && viewItem == skill"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "NEXUS",
+      "properties": {
+        "qgenieSkills.liveDiffLingerMs": {
+          "type": "number",
+          "default": 3000,
+          "minimum": 0,
+          "description": "How long (ms) the live diff preview stays open after an agent edit before the file is opened in the editor."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.24.0",
+    "typescript": "^5.3.0"
+  }
+}
