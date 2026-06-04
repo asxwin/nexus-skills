@@ -432,7 +432,7 @@
     var isOrch = !!this.orchestrator;
     var art = isOrch ? ORCH_ASCII_ROWS : NEXUS_ASCII_ROWS;
     var splashCls = isOrch ? 'splash splash-orch' : 'splash';
-    var subText = isOrch ? 'ORCHESTRATOR // STANDBY' : 'NEXUS v0.4 // READY';
+    var subText = isOrch ? 'ORCHESTRATOR // STANDBY' : 'NEXUS v0.5 // READY';
     var div = document.createElement('div');
     div.id = 'empty-state-' + this.id;
     div.className = 'tab-empty-state';

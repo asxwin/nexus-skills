@@ -49,7 +49,7 @@ function httpsGetJson(urlStr: string, headers: Record<string, string>): Promise<
       port: url.port || 443,
       path: url.pathname,
       method: 'GET',
-      headers: { ...headers, 'User-Agent': 'qgenie-skills-vscode/0.4.0' },
+      headers: { ...headers, 'User-Agent': 'qgenie-skills-vscode/0.5.0' },
       agent: keepAliveAgent,
     }, (res) => {
       let body = '';
@@ -472,7 +472,7 @@ export function streamChatCompletion(
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${config.apiKey}`,
         'X-Encrypted-Key': config.apiKey,
-        'User-Agent': 'qgenie-skills-vscode/0.4.0',
+        'User-Agent': 'qgenie-skills-vscode/0.5.0',
         'Content-Length': Buffer.byteLength(body),
       },
       agent: keepAliveAgent,

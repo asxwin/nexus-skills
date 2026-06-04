@@ -732,7 +732,7 @@ export class ChatViewProvider implements vscode.WebviewViewProvider, SessionHost
          reserved CSS height means: blank-where-the-art-will-be → cascade
          decode is the FIRST animation the user sees. -->
     <pre class="splash splash-empty"></pre>
-    <div class="empty-sub">NEXUS v0.4 // READY</div>
+    <div class="empty-sub">NEXUS v0.5 // READY</div>
     <div class="empty-chips">
       <button class="chip" onclick="quickSend('list workspace files')">list workspace</button>
       <button class="chip" onclick="quickSend('read the active editor file and explain it')">read active file</button>
